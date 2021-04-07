@@ -18,9 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // Importing Routes
 import userRoutes from './router/user.router';
+import moviesRoutes from './router/movies.router';
 
 // Routes
 app.use('/user', userRoutes);
+app.use('/movies', moviesRoutes);
 
 // Starting the server
 export var connection : mysql.Connection

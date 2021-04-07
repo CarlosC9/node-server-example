@@ -1,4 +1,5 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import UserDatabase from '../database/users.database';
 
 export function verifyToken(req : any, res : any, next: any ) {
     if (!req.headers.authorization) {
@@ -12,5 +13,11 @@ export function verifyToken(req : any, res : any, next: any ) {
 
     const payload : any = jwt.verify(token, 'secretKey');
     req.userId = payload._id;
+
+    const user = UserDatabase.findUserById(req.userId);
+    if(!user) {
+        return res.status(500).send('Unauthorization');
+    }
+
     next();
 }
